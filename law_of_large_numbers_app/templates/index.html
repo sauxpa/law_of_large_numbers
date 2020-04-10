@@ -1,0 +1,59 @@
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% extends base %}
+
+{% block title %}Law of large numbers{% endblock %}
+
+{% block postamble %}
+  <style>
+    {% include 'styles.css' %}
+  </style>
+{% endblock %}
+
+{% block contents %}
+  <div class="content">
+    <h1>Law of large numbers</h1>
+    <p>
+      The <b>strong law of large numbers</b> states that the empirical mean estimator of an i.i.d sample of $\mathbb{L}^1$ random variables $(X_n)_{n\geq 1}$ converges almost surely to its expectation $\mu = \mathbb{E}[X_1]$:
+
+      $$
+      \bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{a.s} \mu.
+      $$
+
+
+      Moreover if the variables are also in $\mathbb{L}^2$, the Central Limit Theorem guarantees an asymptotic rate of convergence of $\mathcal{\frac{1}{\sqrt{n}}}$.
+
+      Note that a weaker form, called the <b>weak law of large numbers</b> guarantees the convergence in probability (which is implied by the almost sure convergence) but holds with more general hypothesis.
+
+      Both laws can be relaxed in the case of dependent variables. Intuitively, if the dependency between $X_i$ and $X_j$ fades away fast enough when $\lvert i-j \rvert \rightarrow \infty$, then $\bar{X}_n$ is similar to the mean of an independent sample in the limit $n\rightarrow \infty$.
+
+      This intuition can be made more precise. Assume that $X_n\in \mathbb{L}^2$ for all $n\geq 1$ and there exists a sequence of nonnegative real numbers $(\varepsilon_n)_{n\in \mathbb{N}}$ such that $Cov(X_i, X_j)\leq \varepsilon_{\lvert i-j\rvert}$. Then:
+
+      <ul>
+        <li>if $\varepsilon_n \xrightarrow[n\rightarrow \infty]{} 0$, $\ $ $\bar{X}_n \ \xrightarrow[n\rightarrow \infty]{\mathbb{L}^2, \ \mathbb{P}} \mu $,</li>
+      </br>
+        <li>if $\sum_n \varepsilon_n < \infty$, $\ $ $\bar{X}_n \ \xrightarrow[n\rightarrow \infty]{\text{a.s}} \mu $ and $Var(\bar{X}_n) = \mathcal{O}(\frac{1}{n})$.</li>
+      </ul>
+
+      This notebook aims at showing empirical evidence of this convergence regime by considering a Gaussian sample $X\sim \mathcal{N}(\mathbf{0}, \mathbf{C})$ with $\mathbf{C}_{ij} = \frac{\alpha}{(1+\lvert i-j\rvert)^{\beta}} + \gamma$. By playing the parameters $\alpha$, $\beta$ and $\gamma$, one can exhibit all convergence regimes:
+
+      <ul>
+        <li>$(\varepsilon_n)_{n\in \mathbb{N}}$ is summable ($\gamma = 0$, $\beta>1$),</li>
+        <li>$(\varepsilon_n)_{n\in \mathbb{N}}$ converges to zero but is not summable ($\gamma = 0$, $\beta\leq 1$),</li>
+        <li>$(\varepsilon_n)_{n\in \mathbb{N}}$ does not converge to zero ($\gamma > 0$).</li>
+      </ul>
+    </p>
+
+    {{ super() }}
+
+
+  </div>
+{% endblock %}
